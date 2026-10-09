@@ -4,6 +4,44 @@
   
   
   <entry>
+    <title>面试笔记</title>
+    <link href="/2026/10/10/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/"/>
+    <url>/2026/10/10/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>技术笔记</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>人口回归</title>
+    <link href="/2026/10/10/%E4%BA%BA%E5%8F%A3%E5%9B%9E%E5%BD%92/"/>
+    <url>/2026/10/10/%E4%BA%BA%E5%8F%A3%E5%9B%9E%E5%BD%92/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1、回溯写博客原因"><a href="#1、回溯写博客原因" class="headerlink" title="1、回溯写博客原因"></a>1、回溯写博客原因</h2><p>23年下 写技术笔记还是word 后接触typora(markdown工具) </p><p>后续想公网访问 使用语雀</p><p>再后来就是购买域名 cloudflare github hexo搭建博客</p><h2 id="2、断层"><a href="#2、断层" class="headerlink" title="2、断层"></a>2、断层</h2><p>生活中充满了不确定性 心意飘絮 不在留恋于内心的world</p><h2 id="3、续集"><a href="#3、续集" class="headerlink" title="3、续集"></a>3、续集</h2><p>慢慢稳定 记录技术 记录生活 维持自己的内心世界</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>关于博客</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>hexo+github搭建个人博客</title>
     <link href="/2026/10/10/hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
     <url>/2026/10/10/hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
