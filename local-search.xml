@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>JWT绕过</title>
+    <link href="/2026/10/20/JWT%E7%BB%95%E8%BF%87/"/>
+    <url>/2026/10/20/JWT%E7%BB%95%E8%BF%87/</url>
+    
+    <content type="html"><![CDATA[<meta name="referrer" content="no-referrer" /><h2 id="绕过方法"><a href="#绕过方法" class="headerlink" title="绕过方法"></a>绕过方法</h2><ol><li><p>alg: none 攻击：利用服务端未正确限制签名算法的问题。</p></li><li><p>算法混淆攻击：利用非对称与对称算法处理不当的问题，如 RS256&#x2F;HS256 混淆。</p></li><li><p>签名验证缺失：服务端仅解码 Token，不验证签名。</p></li><li><p>弱密钥攻击：针对弱 HMAC 密钥进行离线猜测。</p></li><li><p>密钥泄露攻击：利用泄露的签名密钥伪造 Token。</p></li><li><p>声明篡改攻击：篡改 role、admin 等权限声明，前提是服务端未正确验证签名或授权。</p></li><li><p>过期时间校验缺失：利用服务端未正确校验 exp 等时间声明的问题。</p></li><li><p>kid 参数注入：利用密钥标识符处理不当导致的密钥选择或注入问题。</p></li><li><p>jku &#x2F; jwk 信任滥用：利用服务端对 Token 内密钥或外部密钥地址盲目信任的问题。</p></li><li><p>Token 重放攻击：重用被窃取且仍然有效的 Token。</p></li><li><p>敏感信息泄露：利用 JWT Payload 通常仅编码、未加密的特点读取其中的信息。</p></li><li><p>撤销机制缺失：利用登出后 Token 仍有效、无法及时撤销的问题。</p></li></ol><h2 id="案例一：alg-none-攻击"><a href="#案例一：alg-none-攻击" class="headerlink" title="案例一：alg: none 攻击"></a>案例一：alg: none 攻击</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;alg&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;none&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;typ&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;JWT&quot;</span><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><p>最终为</p><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs erlang">eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiaXNBZG1pbiI6dHJ1ZX0.<br></code></pre></td></tr></table></figure><p>熊猫头抓取路径、bp跑路径、回显授权为空</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261020145230960-1139631351.png" alt="image-20261020145228747"></p><p>前端接口有Authorization校验</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261020145432846-799171044.png" alt="image-20261020145430700"></p><p>添加字段 获取到敏感信息</p><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">Authorization:</span> eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiaXNBZG1pbiI6dHJ1ZX0.<br></code></pre></td></tr></table></figure><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261020145559589-2124267361.png" alt="image-20261020145557448"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术笔记</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>溯源反制案例</title>
     <link href="/2026/10/18/%E6%BA%AF%E6%BA%90%E5%8F%8D%E5%88%B6%E6%A1%88%E4%BE%8B/"/>
     <url>/2026/10/18/%E6%BA%AF%E6%BA%90%E5%8F%8D%E5%88%B6%E6%A1%88%E4%BE%8B/</url>
