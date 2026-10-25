@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>关于JeecgBoot的骚操作</title>
+    <link href="/2026/10/25/%E5%85%B3%E4%BA%8EJeecgBoot%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C/"/>
+    <url>/2026/10/25/%E5%85%B3%E4%BA%8EJeecgBoot%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C/</url>
+    
+    <content type="html"><![CDATA[<meta name="referrer" content="no-referrer" /><h2 id="jmreport-testConnection"><a href="#jmreport-testConnection" class="headerlink" title="jmreport testConnection"></a>jmreport testConnection</h2><p>看界面 JeecgBoot框架</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025154254714-1915143667.png" alt="image-20261025154254826"></p><p>请求包带smart_platform，f12搜索调用情况</p><p>环境常量写死请求</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025154800973-1589312415.png" alt="image-20261025154758626"></p><p>拼接&#x2F;smart_platform&#x2F;jmreport&#x2F;list到设计页面</p><p>搜索jmreport发现api.js列出了所有接口</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025155726996-1031045313.png" alt="image-20261025155725937"></p><p>拿接口根据响应包回显修改字段</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025160043987-1872055926.png" alt="image-20261025160043085"></p><p>“操作失败，Content type ‘application&#x2F;x-www-form-urlencoded;charset&#x3D;UTF-8’ not supported”</p><p>出现上述结果是Spring @RequestBody经典报错，说明该接口需要json</p><p>继续加参数</p><p>回显数据库连接失败</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025160330668-948383486.png" alt="image-20261025160329514"></p><p>搜索相关字段可以发现是n day</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025160510852-766373354.png" alt="image-20261025160508961"></p><p>测试数据库连接</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025161356964-1922825732.png" alt="image-20261025161356073"></p><p>查SQL，报错，亏了，只有报错数据库名称，问AI原因：对方数据库.ibd不见了</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025161924683-309470744.png" alt="image-20261025161923895"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术笔记</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>JWT绕过</title>
     <link href="/2026/10/20/JWT%E7%BB%95%E8%BF%87/"/>
     <url>/2026/10/20/JWT%E7%BB%95%E8%BF%87/</url>
