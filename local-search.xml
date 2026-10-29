@@ -4,9 +4,9 @@
   
   
   <entry>
-    <title>关于JeecgBoot的骚操作</title>
-    <link href="/2026/10/25/%E5%85%B3%E4%BA%8EJeecgBoot%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C/"/>
-    <url>/2026/10/25/%E5%85%B3%E4%BA%8EJeecgBoot%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C/</url>
+    <title>JeecgBoot框架思路</title>
+    <link href="/2026/10/25/JeecgBoot%E6%A1%86%E6%9E%B6%E6%80%9D%E8%B7%AF/"/>
+    <url>/2026/10/25/JeecgBoot%E6%A1%86%E6%9E%B6%E6%80%9D%E8%B7%AF/</url>
     
     <content type="html"><![CDATA[<meta name="referrer" content="no-referrer" /><h2 id="jmreport-testConnection"><a href="#jmreport-testConnection" class="headerlink" title="jmreport testConnection"></a>jmreport testConnection</h2><p>看界面 JeecgBoot框架</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025154254714-1915143667.png" alt="image-20261025154254826"></p><p>请求包带smart_platform，f12搜索调用情况</p><p>环境常量写死请求</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025154800973-1589312415.png" alt="image-20261025154758626"></p><p>拼接&#x2F;smart_platform&#x2F;jmreport&#x2F;list到设计页面</p><p>搜索jmreport发现api.js列出了所有接口</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025155726996-1031045313.png" alt="image-20261025155725937"></p><p>拿接口根据响应包回显修改字段</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025160043987-1872055926.png" alt="image-20261025160043085"></p><p>“操作失败，Content type ‘application&#x2F;x-www-form-urlencoded;charset&#x3D;UTF-8’ not supported”</p><p>出现上述结果是Spring @RequestBody经典报错，说明该接口需要json</p><p>继续加参数</p><p>回显数据库连接失败</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025160330668-948383486.png" alt="image-20261025160329514"></p><p>搜索相关字段可以发现是n day</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025160510852-766373354.png" alt="image-20261025160508961"></p><p>测试数据库连接</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025161356964-1922825732.png" alt="image-20261025161356073"></p><p>查SQL，报错，亏了，只有报错数据库名称，问AI原因：对方数据库.ibd不见了</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261025161924683-309470744.png" alt="image-20261025161923895"></p>]]></content>
     
@@ -35,19 +35,6 @@
       <category>技术笔记</category>
       
     </categories>
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>溯源反制案例</title>
-    <link href="/2026/10/18/%E6%BA%AF%E6%BA%90%E5%8F%8D%E5%88%B6%E6%A1%88%E4%BE%8B/"/>
-    <url>/2026/10/18/%E6%BA%AF%E6%BA%90%E5%8F%8D%E5%88%B6%E6%A1%88%E4%BE%8B/</url>
-    
-    <content type="html"><![CDATA[<meta name="referrer" content="no-referrer" /><h2 id="一、FRP配置溯源"><a href="#一、FRP配置溯源" class="headerlink" title="一、FRP配置溯源"></a>一、FRP配置溯源</h2><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>攻击者使用chisel（主）与frpc（备）工具进行内网穿透</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261019094324552-1212342578.png" alt="image-20261019094323647"></p><p>外加postsql探测jar包 依次执行 4 条侦察 SQL </p><p>当前执行上下午用户名、建立会话用户名、连接数据库名称和版本号</p><p>查询当前用户权限属性，确认当前用户是否超级用户</p><p>探测高危文件函数权限</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261019094636444-202541992.png" alt="image-20261019094635261"></p><p>result.txt 认证被pg_hba.conf拒绝</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">FAIL org.postgresql.util.PSQLException :: FATAL: <span class="hljs-keyword">no</span> pg_hba.conf entry <span class="hljs-keyword">for</span> host &quot;XXXX&quot;, <span class="hljs-keyword">user</span> &quot;aXXXXn&quot;, <span class="hljs-keyword">database</span> &quot;postgres&quot;, <span class="hljs-keyword">no</span> encryption<br></code></pre></td></tr></table></figure><h3 id="时间线"><a href="#时间线" class="headerlink" title="时间线"></a>时间线</h3><p>report.logchisel上线时间2026&#x2F;09&#x2F;20 10:32:00</p><p>其中一次异常断连后重连</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261019100126470-2142489542.png" alt="image-20261019100125234"></p><p>report_frp.logfrp上线时间2026-09-20 10:34</p><p>多次重连</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261019100554365-1318737809.png" alt="image-20261019100553325"></p><p>report_loop.sh持久化chisel</p><p><img src="https://img2024.cnblogs.com/blog/3373819/202610/3373819-20261019101636864-634662157.png" alt="image-20261019101635931"></p>]]></content>
-    
     
     
   </entry>
